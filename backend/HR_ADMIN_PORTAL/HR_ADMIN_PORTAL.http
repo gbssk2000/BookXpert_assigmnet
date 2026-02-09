@@ -1,0 +1,183 @@
+@HR_ADMIN_PORTAL_HostAddress = http://localhost:5049
+@token = YOUR_JWT_TOKEN_HERE
+
+### Register a new user
+POST {{HR_ADMIN_PORTAL_HostAddress}}/api/Auth/register
+Content-Type: application/json
+
+{
+  "username": "admin",
+  "email": "admin@hrportal.com",
+  "password": "Admin@123"
+}
+
+### Login
+POST {{HR_ADMIN_PORTAL_HostAddress}}/api/Auth/login
+Content-Type: application/json
+
+{
+  "email": "admin@hrportal.com",
+  "password": "Admin@123"
+}
+
+###
+
+# ============================================
+# EMPLOYEE ENDPOINTS
+# ============================================
+
+### Get all employees
+GET {{HR_ADMIN_PORTAL_HostAddress}}/api/Employees
+Authorization: Bearer {{token}}
+
+### Get employee by ID
+GET {{HR_ADMIN_PORTAL_HostAddress}}/api/Employees/1
+Authorization: Bearer {{token}}
+
+### Create new employee
+POST {{HR_ADMIN_PORTAL_HostAddress}}/api/Employees
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+  "name": "John Doe",
+  "email": "john.doe@company.com",
+  "phoneNo": 1234567890,
+  "salary": 75000,
+  "department": 2
+}
+
+### Update employee
+PUT {{HR_ADMIN_PORTAL_HostAddress}}/api/Employees/1
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+  "name": "John Doe Updated",
+  "email": "john.doe@company.com",
+  "phoneNo": 1234567890,
+  "salary": 85000,
+  "department": 2
+}
+
+### Delete employee
+DELETE {{HR_ADMIN_PORTAL_HostAddress}}/api/Employees/1
+Authorization: Bearer {{token}}
+
+###
+
+# ============================================
+# ATTENDANCE ENDPOINTS
+# ============================================
+
+### Get all attendance records
+GET {{HR_ADMIN_PORTAL_HostAddress}}/api/Attendance
+Authorization: Bearer {{token}}
+
+### Get attendance by ID
+GET {{HR_ADMIN_PORTAL_HostAddress}}/api/Attendance/1
+Authorization: Bearer {{token}}
+
+### Create attendance record - Present
+POST {{HR_ADMIN_PORTAL_HostAddress}}/api/Attendance
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+  "employeeId": 1,
+  "checkInTime": "2024-02-07T09:00:00",
+  "checkOutTime": "2024-02-07T17:00:00",
+  "status": 1
+}
+
+### Create attendance record - Absent
+POST {{HR_ADMIN_PORTAL_HostAddress}}/api/Attendance
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+  "employeeId": 2,
+  "checkInTime": "2024-02-07T09:00:00",
+  "checkOutTime": null,
+  "status": 2
+}
+
+### Create attendance record - Half Day
+POST {{HR_ADMIN_PORTAL_HostAddress}}/api/Attendance
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+  "employeeId": 3,
+  "checkInTime": "2024-02-07T09:00:00",
+  "checkOutTime": "2024-02-07T13:00:00",
+  "status": 3
+}
+
+### Create attendance record - Leave
+POST {{HR_ADMIN_PORTAL_HostAddress}}/api/Attendance
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+  "employeeId": 4,
+  "checkInTime": "2024-02-07T00:00:00",
+  "checkOutTime": null,
+  "status": 4
+}
+
+###
+
+# ============================================
+# REPORTS ENDPOINTS
+# ============================================
+
+### Get Employee Directory PDF
+GET {{HR_ADMIN_PORTAL_HostAddress}}/api/Reports/employee-directory/pdf
+Authorization: Bearer {{token}}
+
+### Get Employee Directory Excel
+GET {{HR_ADMIN_PORTAL_HostAddress}}/api/Reports/employee-directory/excel
+Authorization: Bearer {{token}}
+
+### Get Attendance Report PDF
+GET {{HR_ADMIN_PORTAL_HostAddress}}/api/Reports/attendance/pdf?startDate=2024-02-01&endDate=2024-02-28
+Authorization: Bearer {{token}}
+
+### Get Attendance Report Excel
+GET {{HR_ADMIN_PORTAL_HostAddress}}/api/Reports/attendance/excel?startDate=2024-02-01&endDate=2024-02-28
+Authorization: Bearer {{token}}
+
+### Get Department Report PDF
+GET {{HR_ADMIN_PORTAL_HostAddress}}/api/Reports/departments/pdf
+Authorization: Bearer {{token}}
+
+### Get Department Report Excel
+GET {{HR_ADMIN_PORTAL_HostAddress}}/api/Reports/departments/excel
+Authorization: Bearer {{token}}
+
+### Get Salary Report PDF (February 2024)
+GET {{HR_ADMIN_PORTAL_HostAddress}}/api/Reports/salary/pdf?month=2&year=2024
+Authorization: Bearer {{token}}
+
+### Get Salary Report Excel (February 2024)
+GET {{HR_ADMIN_PORTAL_HostAddress}}/api/Reports/salary/excel?month=2&year=2024
+Authorization: Bearer {{token}}
+
+###
+
+# ============================================
+# NOTES:
+# ============================================
+# Department Enum Values:
+# HR = 1, IT = 2, Finance = 3, Sales = 4, Operations = 5
+#
+# AttendanceStatus Enum Values:
+# Present = 1, Absent = 2, HalfDay = 3, Leave = 4
+#
+# Report Types Available:
+# - Employee Directory (PDF/Excel)
+# - Department Statistics (PDF/Excel)
+# - Attendance Records (PDF/Excel with date range)
+# - Salary Information (PDF/Excel by month/year)
+# ============================================
